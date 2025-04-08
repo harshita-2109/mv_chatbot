@@ -71,7 +71,10 @@ def get_vectorstore():
     pdf_name = "./BMSL.pdf"
     loaders = [PyPDFLoader(pdf_name)]
     index = VectorstoreIndexCreator(
-        embedding=HuggingFaceEmbeddings(model_name='all-MiniLM-L12-v2'),
+        embedding=HuggingFaceEmbeddings(
+        model_name='all-MiniLM-L12-v2',
+        model_kwargs={"device": "cpu"}  
+        )
         text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     ).from_loaders(loaders)
     return index.vectorstore
